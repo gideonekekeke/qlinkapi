@@ -1,28 +1,54 @@
+const jobData = require("../Model/JobModel");
+const appyData = require("../Model/ApplyModel");
+const cloudinary = require("../ImageConfig/CloudinaryConfig");
+const res = require("express/lib/response");
+const postApplied = async (req, res) => {
+	try {
+		const jobId = req.params.id;
 
-const jobData = require('../Model/JobModel')
-const appyData = require('../Model/ApplyModel')
+		const { name, email, experience, location, phoneNumber } = req.body;
 
-const postApplied = async(req, res)=>{
-    try{
+		const Image = await cloudinary.uploader.upload(req.file.path);
 
-      const jobID = req.params.id
-      const applyOwn = new appyData(req.body)
-      const userOwn = await jobData.findById(jobID)
-      applyOwn.userApply = userOwn
-      await applyOwn.save()
+		const createUser = await appyData.create({
+			name,
+			email,
+			experience,
+			location,
+			phoneNumber,
+			userID,
+			image: Image.secure_url,
+		});
+		const dUser = await jobData.findById(jobId);
+		createUser.userApply = dUser;
+		await createUser.save();
 
-      userOwn.applied.push(applyOwn)
-      await userOwn.save()
-        res.status( 201 ).json({
-            data: jobOwn
-        })
+		dUser.applied.push(createUser);
+		await dUser.save();
+		res.status(201).json({
+			message: "product created",
+			product: createUser,
+		});
+	} catch (error) {
+		res.status(400).json({
+			message: error.message,
+		});
+	}
+};
 
-    }catch(error){
-    res.status(400).json({message: error.message})
-  }
-}
+const getApplyed = async () => {
+	try {
+		const getData = await appyData.find();
 
+		res.status(200).json(getData);
+	} catch (error) {
+		res.status(400).json({
+			message: error.message,
+		});
+	}
+};
 
 module.exports = {
-    postApplied
-}
+	postApplied,
+	getApplyed,
+};

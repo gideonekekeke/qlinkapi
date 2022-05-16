@@ -65,6 +65,14 @@ const userSchema = mongoose.Schema({
   job : [{
       type : mongoose.Schema.Types.ObjectId,
       ref : "jobs"
+  }],
+  payment : [{
+      type : mongoose.Schema.Types.ObjectId,
+      ref : "pay"
+  }],
+  conversation : [{
+      type : mongoose.Schema.Types.ObjectId,
+      ref : "chat"
   }]
 }, {timestamps : true})
 

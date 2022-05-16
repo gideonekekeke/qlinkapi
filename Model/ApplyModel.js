@@ -1,29 +1,36 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const applySchema = mongoose.Schema({
-    name : {
-        type : String,
-    },
-    email : {
-        type : String
-    },
-    uploadCv : {
-        type : String
-    },
-    expreience : {
-        type : String
-    },
-    location : {
-        type : String
-    },
-    phoneNumber : {
-        type : String
-    },
+const applySchema = mongoose.Schema(
+	{
+		name: {
+			type: String,
+		},
+		email: {
+			type: String,
+		},
+		image: {
+			type: String,
+		},
+		expreience: {
+			type: String,
+		},
+		location: {
+			type: String,
+		},
+		phoneNumber: {
+			type: String,
+		},
 
-    userApply : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "jobs"
-    },
-}, {timestamps : true})
+        userID : {
+            type : String
+        },
 
-module.exports = mongoose.model("apply", applySchema)
+		userApply: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "jobs",
+		},
+	},
+	{ timestamps: true },
+);
+
+module.exports = mongoose.model("apply", applySchema);
