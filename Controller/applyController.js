@@ -16,7 +16,6 @@ const postApplied = async (req, res) => {
 			experience,
 			location,
 			phoneNumber,
-			userID,
 			image: Image.secure_url,
 		});
 		const dUser = await jobData.findById(jobId);

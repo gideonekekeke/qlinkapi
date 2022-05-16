@@ -21,9 +21,7 @@ const applySchema = mongoose.Schema(
 			type: String,
 		},
 
-        userID : {
-            type : String
-        },
+      
 
 		userApply: {
 			type: mongoose.Schema.Types.ObjectId,
